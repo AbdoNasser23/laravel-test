@@ -36,7 +36,8 @@
                 <a href="{{route("index")}}" aria-current="page" class="rounded-md  px-3 py-2 text-sm font-medium {{request()->routeIs("index") ? $current : $default}}">Dashboard</a>
                 <a href="{{route("about")}}" class="rounded-md px-3 py-2 text-sm font-medium {{request()->routeIs("about")? $current : $default}}">About</a>
                 <a href="{{route("contact")}}" class="rounded-md px-3 py-2 text-sm font-medium {{request()->routeIs("contact")? $current : $default}}">Contact</a>
-                </div>
+                <a href="{{route("posts.index")}}" class="rounded-md px-3 py-2 text-sm font-medium {{request()->routeIs("posts.index")? $current : $default}}">Post</a>
+            </div>
 
             </div>
             </div>

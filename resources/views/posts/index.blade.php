@@ -5,6 +5,12 @@ Post
 @endsection
 
 @section('content')
+
+@if(session('success'))
+    <div class="bg-green-50 px-3 py-2">
+        {{session('success')}}
+    </div>
+@endif
 <h1 class="text-3xl font-bold text-center text-indigo-600">
         This is Blog page
     </h1>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::simplePaginate(4);
+        $posts = Post::latest()->simplePaginate(4);
 
         return view("posts.index",compact('posts'));
     }
@@ -28,25 +29,16 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $validated = $request->validate(
-            [
-                'title'     =>  'required',
-                'author'    =>  'required',
-                'body'      =>  'required'
-            ],
-            [
-                'title.required'     => 'Faild is required',
-                'author.required'    => 'Faild is required',
-                'body.required'      => 'Faild is required'
-            ]
-        );
+        $post = new Post();
+        $post->title = $request->input('title') ;
+        $post->author = $request->input('author') ;
+        $post->body = $request->input('body') ;
+        $post->published = $request->has('published') ;
 
-        echo "<br>";
-        print_r($request->all());
-        echo "</br>";
-        //TODO: This will be complete for form section
+        $post->save();
+        return redirect("posts")->with("success" , "Post created successfully!");
     }
 
     /**

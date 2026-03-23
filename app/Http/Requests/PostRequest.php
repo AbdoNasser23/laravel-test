@@ -17,7 +17,7 @@ class PostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'     =>  'bail|required|unique:posts',
+            'title'     =>  "bail|required|unique:posts,title,{$this->input('id')}",
             'author'    =>  'required',
             'body'      =>  'required'
         ];

@@ -38,7 +38,7 @@ class PostController extends Controller
         $post->published = $request->has('published') ;
 
         $post->save();
-        return redirect("posts")->with("success" , "Post created successfully!");
+        return redirect("posts")->with("success" , "Post Created Successfully!");
     }
 
     /**
@@ -46,7 +46,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $post = Post::findorfail($id);
+        $post = Post::findOrFail($id);
 
         return view("posts.show",compact('post'));
     }
@@ -56,15 +56,23 @@ class PostController extends Controller
      */
     public function edit(string $id)
     {
-        return view("posts.edit");
+        $post = Post::findOrFail($id);
+        return view("posts.edit",compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PostRequest $request, string $id)
     {
-        //TODO: This will be complete for form section
+        $post = Post::findOrFail($id);
+
+        $post->title = $request->input('title');
+        $post->author = $request->input('author');
+        $post->body = $request->input('body');
+        $post->published = $request->has('published');
+        $post->save();
+        return redirect('posts')->with("success", "Post Updated Successfully!");
     }
 
     /**
@@ -72,6 +80,8 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //TODO: This will be complete for form section
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return redirect('posts')->with("success","Post Deleted Successfully!");
     }
 }

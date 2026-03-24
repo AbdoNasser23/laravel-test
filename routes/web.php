@@ -8,21 +8,21 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
+Route::prefix('v1')->group(function () {
 
-Route::get("/", IndexController::class)->name("index");
+    Route::get("/", IndexController::class)->name("index");
 
-Route::get("/about", AboutController::class)->name("about");
+    Route::get("/about", AboutController::class)->name("about");
 
-Route::get("/contact", ContactController::class)->name("contact");
+    Route::get("/contact", ContactController::class)->name("contact");
 
-// posts
-Route::resource('posts',PostController::class);
+    // posts
+    Route::resource('posts', PostController::class);
 
-//comments
-Route::resource('comments',CommentController::class);
+    //comments
+    Route::resource('comments', CommentController::class);
 
-//Tags
+    //Tags
 
-Route::resource('tags',TagController::class);
-
-
+    Route::resource('tags', TagController::class);
+});

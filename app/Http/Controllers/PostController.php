@@ -38,7 +38,7 @@ class PostController extends Controller
         $post->published = $request->has('published') ;
 
         $post->save();
-        return redirect("posts")->with("success" , "Post Created Successfully!");
+        return redirect()->route('posts.index')->with("success" , "Post Created Successfully!");
     }
 
     /**
@@ -72,7 +72,7 @@ class PostController extends Controller
         $post->body = $request->input('body');
         $post->published = $request->has('published');
         $post->save();
-        return redirect('posts')->with("success", "Post Updated Successfully!");
+        return redirect()->route('posts.index')->with("success", "Post Updated Successfully!");
     }
 
     /**
@@ -82,6 +82,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
-        return redirect('posts')->with("success","Post Deleted Successfully!");
+        return redirect()->route('posts.index')->with("success","Post Deleted Successfully!");
     }
 }

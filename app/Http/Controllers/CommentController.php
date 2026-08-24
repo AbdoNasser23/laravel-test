@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
-use App\Models\Post;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -40,7 +39,7 @@ class CommentController extends Controller
         $comment->posts_id = $postId;
         $comment->save();
 
-        return redirect()->route('posts.show',$postId)->with("success","Comment Created Successfully!");
+        return redirect()->route('posts.show',$postId)->with("success","Comment Added Successfully!");
     }
 
     /**
@@ -57,7 +56,8 @@ class CommentController extends Controller
      */
     public function edit(string $id)
     {
-        return view('comments.edit');
+        $comment = Comment::findorfail($id);
+        return view('comments.edit',compact('comment'));
     }
 
     /**
@@ -65,7 +65,12 @@ class CommentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //TODO:this will be complete for form section
+        $comment = Comment::findorfail($id);
+        $comment->author = $request->input('author');
+        $comment->content = $request->input('content');
+        $comment->save();
+
+        return redirect()->route('posts.show',$comment->posts_id)->with("success","Comment Updated Successfully!");
     }
 
     /**

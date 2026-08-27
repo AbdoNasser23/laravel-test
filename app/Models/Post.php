@@ -15,7 +15,7 @@ class Post extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public    $incrementing = false;
-    protected $fillable = ["title","body","author","published"];
+    protected $fillable = ["title","body","author","published","user_id"];
     protected $guarded = ["id"];
 
 
@@ -28,4 +28,10 @@ class Post extends Model
     {
         return $this->belongsToMany(Tag::class,"posts_tags","posts_id","tags_id");
     }
+
+    public function user()
+        {
+            return $this->belongsTo(User::class,'user_id');
+        }
+
 }

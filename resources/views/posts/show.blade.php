@@ -23,7 +23,7 @@
                 </h2>
 
                 <p class="text-sm text-gray-500 mb-3">
-                    By {{ $post->author }}
+                    By {{ $post->user->name }}
                 </p>
 
                 <p class="text-gray-700 leading-relaxed">

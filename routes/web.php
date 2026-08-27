@@ -35,7 +35,32 @@ Route::prefix('v1')->group(function () {
     Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
     Route::middleware('auth')->group(function(){
-    Route::resource('posts', PostController::class);
+
+    #Admin
+    Route::middleware('role:admin')->group(function(){
+
+
+        Route::delete('posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
+    });
+
+
+
+    #Editor , Admin
+    Route::middleware('role:editor,admin')->group(function(){
+        Route::get('posts/crate',[PostController::class,'create'])->name('posts.create');
+        Route::post('posts',[PostController::class,'store'])->name('posts.store');
+        Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit')->can('update', 'post');
+        Route::patch('posts/{post}',[PostController::class,'update'])->name('posts.update');
+    });
+
+    #Viewer , Editor , Admin
+
+    Route::middleware('role:viewer,editor,admin')->group(function(){
+        Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+        Route::get('posts/{post}',[PostController::class,'show'])->name('posts.show');
+    });
+
+
 
     });
 

@@ -19,7 +19,7 @@
 
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
-                    <div class="sm:col-span-3">
+                    <div class="col-span-full">
                         <label for="title" class="block text-sm/6 font-medium text-gray-900">Title</label>
                         <div class="mt-2">
                             <input name="title" id="title" value="{{old('title')}}" type="text"
@@ -31,17 +31,7 @@
                         @enderror
                     </div>
 
-                    <div class="sm:col-span-3">
-                        <label for="author" class="block text-sm/6 font-medium text-gray-900">Author</label>
-                        <div class="mt-2">
-                            <input id="author" type="text" name="author" value="{{old('author')}}"
-                                class="block w-full rounded-md bg-white px-3 py-2 text-base text-gray-900 border shadow-sm sm:text-sm
-                                {{ $errors->has('author') ? 'border-red-500 ring-1 ring-red-300' : 'border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200' }}" />
-                        </div>
-                        @error('author')
-                            <span class="text-red-500">{{ $message }}</span>
-                        @enderror
-                    </div>
+
 
                     <div class="col-span-full">
                         <label for="body" class="block text-sm/6 font-medium text-gray-900">Content</label>

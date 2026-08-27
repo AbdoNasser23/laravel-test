@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -33,10 +35,9 @@ class PostController extends Controller
     {
         $post = new Post();
         $post->title = $request->input('title') ;
-        $post->author = $request->input('author') ;
+        $post->user_id = User::find(Auth::id())->id;
         $post->body = $request->input('body') ;
         $post->published = $request->has('published') ;
-
         $post->save();
         return redirect()->route('posts.index')->with("success" , "Post Created Successfully!");
     }
@@ -44,9 +45,8 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post)
     {
-        $post = Post::findOrFail($id);
 
         return view("posts.show",compact('post'));
     }
@@ -54,21 +54,19 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($id);
+
         return view("posts.edit",compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PostRequest $request, string $id)
+    public function update(PostRequest $request, Post $post)
     {
-        $post = Post::findOrFail($id);
 
         $post->title = $request->input('title');
-        $post->author = $request->input('author');
         $post->body = $request->input('body');
         $post->published = $request->has('published');
         $post->save();
@@ -78,9 +76,8 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        $post = Post::findOrFail($id);
         $post->delete();
         return redirect()->route('posts.index')->with("success","Post Deleted Successfully!");
     }

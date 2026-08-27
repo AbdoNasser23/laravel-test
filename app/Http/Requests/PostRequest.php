@@ -18,16 +18,14 @@ class PostRequest extends FormRequest
     {
         return [
             'title'     =>  "bail|required|unique:posts,title,{$this->input('id')}",
-            'author'    =>  'required',
             'body'      =>  'required'
         ];
     }
     public function messages()
     {
         return [
-            'title.required'     => 'Faild is required',
-            'author.required'    => 'Faild is required',
-            'body.required'      => 'Faild is required'
+            'title.required'     => 'Title is required',
+            'body.required'      => 'Body is required'
         ];
     }
 }

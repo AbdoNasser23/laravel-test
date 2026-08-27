@@ -6,7 +6,6 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {

@@ -15,7 +15,6 @@ class CommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'author' => 'bail|required',
             'content' => 'required'
         ];
     }
@@ -23,8 +22,7 @@ class CommentRequest extends FormRequest
     public function messages()
     {
         return [
-            'author.required' => 'Faild is required',
-            'content.required' => 'Faild is required'
+            'content.required' => 'Content is required'
         ];
     }
 }

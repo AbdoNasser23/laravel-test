@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -34,10 +35,11 @@ class CommentController extends Controller
     {
         $comment = new Comment();
         $postId = $request->input('posts_id');
-        $comment->author = $request->input('author');
+        $comment->user_id = Auth::id();
         $comment->content = $request->input('content');
         $comment->posts_id = $postId;
         $comment->save();
+
 
         return redirect()->route('posts.show',$postId)->with("success","Comment Added Successfully!");
     }
@@ -66,7 +68,6 @@ class CommentController extends Controller
     public function update(Request $request, string $id)
     {
         $comment = Comment::findorfail($id);
-        $comment->author = $request->input('author');
         $comment->content = $request->input('content');
         $comment->save();
 

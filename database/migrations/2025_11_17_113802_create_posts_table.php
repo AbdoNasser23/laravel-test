@@ -15,7 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string("title");
             $table->string("body");
-            $table->boolean("published");
+            $table->boolean("published")->default(false);
             $table->foreignId("user_id")->constrained("users")->onDelete("cascade");
             $table->timestamps();
         });

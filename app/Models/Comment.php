@@ -15,11 +15,16 @@ class Comment extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public    $incrementing = false;
-    protected $fillable = ['author','content','posts_id'];
+    protected $fillable = ['content','posts_id','user_id'];
     protected $guarded = ['id'];
 
     public function post ()
     {
         return $this->belongsTo(Post::class,'posts_id');
+    }
+
+    public function user ()
+    {
+        return $this->belongsTo(User::class,'user_id');
     }
 }

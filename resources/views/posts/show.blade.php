@@ -51,7 +51,7 @@
                             {{ $comment->content }}
                         </p>
                         <span class="text-sm text-gray-500">
-                            — {{ $comment->author }}
+                            — {{ $comment->user->name }}
                         </span>
                     </li>
                 @endforeach

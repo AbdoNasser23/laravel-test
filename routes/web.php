@@ -14,6 +14,8 @@ Route::prefix('v1')->group(function () {
 
     Route::get("/", IndexController::class)->name("index");
 
+    Route::get("/about", AboutController::class)->name("about");
+
 
     Route::get("/contact", ContactController::class)->name("contact");
 
@@ -36,37 +38,30 @@ Route::prefix('v1')->group(function () {
 
     Route::middleware('auth')->group(function(){
 
-    #Admin
-    Route::middleware('role:admin')->group(function(){
 
 
-        Route::delete('posts/{post}',[PostController::class,'destroy'])->name('posts.destroy');
-    });
+    // #viewer
+    // Route::middleware('role:viewer')->group(function(){
+
+    // });
 
 
+    #Viewer and Admin
 
-    #Editor , Admin
-    Route::middleware('role:editor,admin')->group(function(){
-        Route::get('posts/crate',[PostController::class,'create'])->name('posts.create');
+    Route::middleware('role:viewer,admin')->group(function(){
+        Route::get('posts/create',[PostController::class,'create'])->name('posts.create');
         Route::post('posts',[PostController::class,'store'])->name('posts.store');
-        Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit')->can('update', 'post');
-        Route::patch('posts/{post}',[PostController::class,'update'])->name('posts.update');
-    });
-
-    #Viewer , Editor , Admin
-
-    Route::middleware('role:viewer,editor,admin')->group(function(){
         Route::get('posts', [PostController::class, 'index'])->name('posts.index');
         Route::get('posts/{post}',[PostController::class,'show'])->name('posts.show');
+        Route::get('posts/{post}/edit',[PostController::class,'edit'])->name('posts.edit')->can('update', 'post');
+        Route::patch('posts/{post}',[PostController::class,'update'])->name('posts.update');
+        Route::delete('posts/{post}',[PostController::class,'destroy'])->name('posts.destroy')->can('delete', 'post');
     });
 
 
 
     });
 
-    Route::middleware('onlyMe')->group(function(){
-    Route::get("/about", AboutController::class)->name("about");
 
-    });
 
 });
